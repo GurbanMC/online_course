@@ -15,6 +15,22 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->string('code')->index();
+            $table->string('name_tm');
+            $table->string('name_en')->nullable();
+            $table->string('full_name_tm');
+            $table->string('full_name_en')->nullable();
+            $table->string('slug')->unique();
+            $table->string('video')->nullable();
+            $table->unsignedDouble('price')->default(0);
+            $table->unsignedFloat('discount_percent')->default(0);
+            $table->dateTime('discount_start')->useCurrent();
+            $table->dateTime('discount_end')->useCurrent();
+            $table->text('description')->nullable();
+            $table->unsignedInteger('favorites')->default(0);
+            $table->unsignedInteger('viewed')->default(0);
             $table->timestamps();
         });
     }

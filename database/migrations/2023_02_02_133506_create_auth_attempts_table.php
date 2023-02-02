@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('auth_attempts', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('username');
+            $table->string('event');
+            $table->unsignedBigInteger('ip_address_id')->index();
+            $table->foreign('ip_address_id')->references('id')->on('ip_addresses')->cascadeOnDelete();
+            $table->unsignedBigInteger('user_agent_id')->index();
+            $table->foreign('user_agent_id')->references('id')->on('user_agents')->cascadeOnDelete();
+            $table->timestamp('created_at')->nullable();
         });
     }
 

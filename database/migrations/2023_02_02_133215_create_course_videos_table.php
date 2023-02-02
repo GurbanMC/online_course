@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('course_videos', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('course_id')->index();
+            $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
+            $table->string('video');
         });
     }
 

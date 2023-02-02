@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_attribute_values', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('course_id')->index();
+            $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
+            $table->unsignedBigInteger('attribute_value_id')->index();
+            $table->foreign('attribute_value_id')->references('id')->on('attribute_values')->cascadeOnDelete();
+            $table->primary(['course_id', 'attribute_value_id']);
+            $table->unsignedInteger('sort_order')->default(1);
         });
     }
 

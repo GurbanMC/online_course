@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('teacher_courses', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('courses', function (Blueprint $table) {
+            $table->unsignedBigInteger('level_id')->index()->nullable();
+            $table->foreign('level_id')->references('id')->on('attribute_values')->nullOnDelete();
         });
     }
 
@@ -26,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teacher_courses');
+        Schema::table('courses', function (Blueprint $table) {
+            $table->dropColumn(['level_id']);
+        });
     }
 };
