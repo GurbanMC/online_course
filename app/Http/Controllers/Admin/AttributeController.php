@@ -18,10 +18,8 @@ class AttributeController extends Controller
         $objs = Attribute::orderBy('sort_order')
             ->with(['values' => function ($query) {
                 $query->withCount([
-                    'products as in_stock_products_count' => function ($query) {
+                    'courses as in_stock_courses_count' => function ($query) {
                         $query->where('stock', '>', 0);
-                    }, 'products as out_of_stock_products_count' => function ($query) {
-                        $query->where('stock', '<', 1);
                     }
                 ]);
             }])

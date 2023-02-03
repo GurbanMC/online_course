@@ -19,10 +19,8 @@ class CategoryController extends Controller
         $objs = Category::orderBy('sort_order')
             ->with('parent')
             ->withCount([
-                'products as in_stock_products_count' => function ($query) {
+                'course as in_stock_course_count' => function ($query) {
                     $query->where('stock', '>', 0);
-                }, 'products as out_of_stock_products_count' => function ($query) {
-                    $query->where('stock', '<', 1);
                 }
             ])
             ->get();
@@ -62,27 +60,19 @@ class CategoryController extends Controller
             'parent' => ['nullable', 'integer', 'min:1'],
             'name_tm' => ['required', 'string', 'max:255'],
             'name_en' => ['nullable', 'string', 'max:255'],
-            'product_name_tm' => ['nullable', 'string', 'max:255'],
-            'product_name_en' => ['nullable', 'string', 'max:255'],
+            'course_name_tm' => ['nullable', 'string', 'max:255'],
+            'course_name_en' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['required', 'integer', 'min:1'],
-            'image' => ['nullable', 'image', 'mimes:png', 'max:16', 'dimensions:width=200,height=200'],
         ]);
 
         $obj = Category::create([
             'parent_id' => $request->parent ?: null,
             'name_tm' => $request->name_tm,
             'name_en' => $request->name_en ?: null,
-            'product_name_tm' => $request->product_name_tm ?: null,
-            'product_name_en' => $request->product_name_en ?: null,
+            'course_name_tm' => $request->course_name_tm ?: null,
+            'course_name_en' => $request->course_name_en ?: null,
             'sort_order' => $request->sort_order,
         ]);
-
-        if ($request->hasFile('image')) {
-            $name = str()->random(10) . '.' . $request->image->extension();
-            Storage::putFileAs('public/c', $request->image, $name);
-            $obj->image = $name;
-            $obj->update();
-        }
 
         return to_route('admin.categories.index')
             ->with([
@@ -124,10 +114,9 @@ class CategoryController extends Controller
             'parent' => ['nullable', 'integer', 'min:1'],
             'name_tm' => ['required', 'string', 'max:255'],
             'name_en' => ['nullable', 'string', 'max:255'],
-            'product_name_tm' => ['nullable', 'string', 'max:255'],
-            'product_name_en' => ['nullable', 'string', 'max:255'],
+            'course_name_tm' => ['nullable', 'string', 'max:255'],
+            'course_name_en' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['required', 'integer', 'min:1'],
-            'image' => ['nullable', 'image', 'mimes:png', 'max:16', 'dimensions:width=200,height=200'],
         ]);
 
         $obj = Category::updateOrCreate([
@@ -136,20 +125,10 @@ class CategoryController extends Controller
             'parent_id' => $request->parent ?: null,
             'name_tm' => $request->name_tm,
             'name_en' => $request->name_en ?: null,
-            'product_name_tm' => $request->product_name_tm ?: null,
-            'product_name_en' => $request->product_name_en ?: null,
+            'course_name_tm' => $request->course_name_tm ?: null,
+            'course_name_en' => $request->course_name_en ?: null,
             'sort_order' => $request->sort_order,
         ]);
-
-        if ($request->hasFile('image')) {
-            if ($obj->image) {
-                Storage::delete('public/c/' . $obj->image);
-            }
-            $name = str()->random(10) . '.' . $request->image->extension();
-            Storage::putFileAs('public/c', $request->image, $name);
-            $obj->image = $name;
-            $obj->update();
-        }
 
         return to_route('admin.categories.index')
             ->with([
@@ -165,10 +144,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $obj = Category::withCount('child', 'products')
+        $obj = Category::withCount('child', 'courses')
             ->findOrFail($id);
         $objName = $obj->getName();
-        if ($obj->child_count > 0 or $obj->products_count > 0) {
+        if ($obj->child_count > 0 or $obj->courses_count > 0) {
             return redirect()->back()
                 ->with([
                     'error' => trans('app.error') . '!'

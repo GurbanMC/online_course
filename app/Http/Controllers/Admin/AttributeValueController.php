@@ -111,10 +111,10 @@ class AttributeValueController extends Controller
      */
     public function destroy($id)
     {
-        $obj = AttributeValue::withCount('products')
+        $obj = AttributeValue::withCount('course')
             ->findOrFail($id);
         $objName = $obj->getName();
-        if ($obj->products_count > 0 ) {
+        if ($obj->course_count > 0 ) {
             return redirect()->back()
                 ->with([
                     'error' => trans('app.error') . '!'
