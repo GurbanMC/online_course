@@ -58,7 +58,7 @@ class ProductFactory extends Factory
             'full_name_tm' => $fullNameTm,
             'full_name_en' => $fullNameEn,
             'slug' => str()->slug($fullNameTm) . '-' . str()->random(10),
-            'price' => fake()->randomFloat($nbMaxDecimals = 1, $min = 10, $max = 100),
+            'price' => fake()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 50),
             'discount_percent' => $hasDiscount
                 ? rand(10, 20) : 0,
             'discount_start' => $hasDiscount

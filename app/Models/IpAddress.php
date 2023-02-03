@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class IpAddress extends Model
 {
-    use HasFactory;
+    protected $guarded = [
+        'id',
+    ];
+
+    public $timestamps = false;
+
+
+    public function authAttempts()
+    {
+        return $this->hasMany(AuthAttempt::class)
+            ->orderBy('id');
+    }
 }
