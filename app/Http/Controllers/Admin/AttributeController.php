@@ -16,18 +16,12 @@ class AttributeController extends Controller
     public function index()
     {
         $objs = Attribute::orderBy('sort_order')
-            ->with(['values' => function ($query) {
-                $query->withCount([
-                    'courses as in_stock_courses_count' => function ($query) {
-                        $query->where('stock', '>', 0);
-                    }
-                ]);
-            }])
-            ->paginate(50);
+            ->with('values')
+            ->paginate(40);
 
         return view('admin.attribute.index')
             ->with([
-                'objs' => $objs,
+                'objs' => $objs
             ]);
     }
 
@@ -59,7 +53,7 @@ class AttributeController extends Controller
         $obj = Attribute::create([
             'name_tm' => $request->name_tm,
             'name_en' => $request->name_en ?: null,
-            'product_name' => $request->product_name ?: 0,
+            'course_name' => $request->course_name ?: 0,
             'sort_order' => $request->sort_order,
         ]);
 
@@ -97,7 +91,7 @@ class AttributeController extends Controller
         $request->validate([
             'name_tm' => ['required', 'string', 'max:255'],
             'name_en' => ['nullable', 'string', 'max:255'],
-            'product_name' => ['boolean'],
+            'course_name' => ['nullable|string|max:255'],
             'sort_order' => ['required', 'integer', 'min:1'],
         ]);
 
@@ -106,7 +100,7 @@ class AttributeController extends Controller
         ], [
             'name_tm' => $request->name_tm,
             'name_en' => $request->name_en ?: null,
-            'product_name' => $request->product_name ?: 0,
+            'product_name' => $request->course_name ?: 0,
             'sort_order' => $request->sort_order,
         ]);
 
@@ -126,18 +120,21 @@ class AttributeController extends Controller
     {
         $obj = Attribute::withCount('values')
             ->findOrFail($id);
-        $objName = $obj->getName();
-        if (in_array($obj->id, [1, 2, 3]) or $obj->values_count > 0) {
+
+        $objName = $obj->name;
+
+        if ($obj->values_count > 0) {
             return redirect()->back()
                 ->with([
-                    'error' => trans('app.error') . '!'
+                    'error' => trans('error') . '!'
                 ]);
         }
+
         $obj->delete();
 
         return redirect()->back()
             ->with([
-                'success' => trans('app.attribute') . ' (' . $objName . ') ' . trans('app.deleted') . '!'
+                'success' => trans('app.attribute') . ' ( ' . $obj->getName() . ' ) ' . trans('app.deleted') . '!'
             ]);
     }
 }

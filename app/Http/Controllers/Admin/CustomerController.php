@@ -18,13 +18,9 @@ class CustomerController extends Controller
     {
         $request->validate([
             'q' => 'nullable|string|max:255',
-            'has_orders' => 'nullable|boolean',
-            'has_addresses' => 'nullable|boolean',
             'has_favorites' => 'nullable|boolean',
         ]);
         $q = $request->q ?: null;
-        $f_hasOrders = $request->has('has_orders') ? $request->has_order : null;
-        $f_hasAddresses = $request->has('has_addresses') ? $request->has_addresses : null;
         $f_hasFavorites = $request->has('has_favorites') ? $request->has_favorites : null;
 
         $objs = Customer::when($q, function ($query, $q) {
@@ -33,20 +29,6 @@ class CustomerController extends Controller
                 $query->orWhere('username', 'like', '%' . $q . '%');
             });
         })
-            ->when(isset($f_hasOrders), function ($query) use ($f_hasOrders) {
-                if ($f_hasOrders) {
-                    return $query->has('orders');
-                } else {
-                    return $query->doesntHave('orders');
-                }
-            })
-            ->when(isset($f_hasAddresses), function ($query) use ($f_hasAddresses) {
-                if ($f_hasAddresses) {
-                    return $query->has('addresses');
-                } else {
-                    return $query->doesntHave('addresses');
-                }
-            })
             ->when(isset($f_hasFavorites), function ($query) use ($f_hasFavorites) {
                 if ($f_hasFavorites) {
                     return $query->has('favorites');
@@ -55,7 +37,7 @@ class CustomerController extends Controller
                 }
             })
             ->orderBy('id', 'desc')
-            ->withCount(['orders', 'orderProducts', 'addresses', 'favorites'])
+            ->withCount(['favorites'])
             ->paginate(50)
             ->withQueryString();
 

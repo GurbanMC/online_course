@@ -18,16 +18,11 @@ class CategoryController extends Controller
     {
         $objs = Category::orderBy('sort_order')
             ->with('parent')
-            ->withCount([
-                'course as in_stock_course_count' => function ($query) {
-                    $query->where('stock', '>', 0);
-                }
-            ])
             ->get();
 
         return view('admin.category.index')
             ->with([
-                'objs' => $objs,
+                'objs' => $objs
             ]);
     }
 
@@ -89,6 +84,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $obj = Category::findOrFail($id);
+
         $parents = Category::where('id', '!=', $obj->id)
             ->whereNull('parent_id')
             ->orderBy('sort_order')
@@ -144,20 +140,22 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $obj = Category::withCount('child', 'courses')
-            ->findOrFail($id);
-        $objName = $obj->getName();
-        if ($obj->child_count > 0 or $obj->courses_count > 0) {
+        $obj = Category::findOrFail($id);
+
+        $objName = $obj->name;
+
+        if ($obj->child_count > 0 or $obj->product_count > 0) {
             return redirect()->back()
                 ->with([
                     'error' => trans('app.error') . '!'
                 ]);
         }
+
         $obj->delete();
 
         return redirect()->back()
             ->with([
-                'success' => trans('app.category') . ' (' . $objName . ') ' . trans('app.deleted') . '!'
+                'success' => trans('app.category') . ' (' . $obj->getName() . ') ' . trans('app.deleted') . '!'
             ]);
     }
 }

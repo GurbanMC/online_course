@@ -16,13 +16,12 @@ class AttributeValueController extends Controller
      */
     public function create()
     {
-        $attributes = Attribute::orderBy('sort_order')
-            ->get();
+        $attributes = Attribute::orderBy('sort_order')->get();
 
         return view('admin.attribute.value.create')
             ->with([
                 'attributes' => $attributes,
-            ]);
+            ]);;
     }
 
     /**
@@ -111,20 +110,24 @@ class AttributeValueController extends Controller
      */
     public function destroy($id)
     {
-        $obj = AttributeValue::withCount('course')
+        $obj = AttributeValue::withCount('products')
             ->findOrFail($id);
-        $objName = $obj->getName();
-        if ($obj->course_count > 0 ) {
+
+        $objName = $obj->name;
+
+        if ($obj->products_count > 0)
+        {
             return redirect()->back()
                 ->with([
-                    'error' => trans('app.error') . '!'
+                    'error' => trans('error') . '!'
                 ]);
         }
+
         $obj->delete();
 
         return redirect()->back()
             ->with([
-                'success' => trans('app.attributeValue') . ' (' . $objName . ') ' . trans('app.deleted') . '!'
+                'success' => trans('app.attribute') . ' ( ' . $obj->getName() . ' ) ' . trans('app.deleted') . '!'
             ]);
     }
 }

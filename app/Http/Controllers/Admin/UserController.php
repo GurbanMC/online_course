@@ -149,17 +149,14 @@ class UserController extends Controller
     {
         return [
             ['id' => 1, 'name' => trans('app.categories')],
-            ['id' => 2, 'name' => trans('app.brands')],
             ['id' => 3, 'name' => trans('app.attributes')],
-            ['id' => 4, 'name' => trans('app.products')],
-            ['id' => 5, 'name' => trans('app.orders')],
-            ['id' => 6, 'name' => trans('app.customers')],
-            ['id' => 7, 'name' => trans('app.verifications')],
-            ['id' => 8, 'name' => trans('app.locations')],
-            ['id' => 9, 'name' => trans('app.users')],
-            ['id' => 10, 'name' => trans('app.authAttempts')],
-            ['id' => 11, 'name' => trans('app.ipAddresses')],
-            ['id' => 12, 'name' => trans('app.userAgents')],
+            ['id' => 4, 'name' => trans('app.courses')],
+            ['id' => 5, 'name' => trans('app.customers')],
+            ['id' => 6, 'name' => trans('app.verifications')],
+            ['id' => 7, 'name' => trans('app.users')],
+            ['id' => 8, 'name' => trans('app.authAttempts')],
+            ['id' => 9, 'name' => trans('app.ipAddresses')],
+            ['id' => 10, 'name' => trans('app.userAgents')],
         ];
     }
 }
