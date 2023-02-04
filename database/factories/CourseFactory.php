@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
-class ProductFactory extends Factory
+class CourseFactory extends Factory
 {
     /**
      * Configure the model factory.
@@ -52,7 +52,7 @@ class ProductFactory extends Factory
             'category_id' => $category->id,
             'level_id' => isset($level) ? $level->id : null,
             'code' => 'c' . $category->id
-                . (isset($level) ? '-g' . $level->id : ''),
+                . (isset($level) ? '-l' . $level->id : ''),
             'name_tm' => $nameTm,
             'name_en' => $nameEn,
             'full_name_tm' => $fullNameTm,

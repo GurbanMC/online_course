@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Customer;
+use App\Models\CustomerAddress;
 use App\Models\Course;
 use App\Models\Verification;
 use Illuminate\Database\Seeder;
@@ -28,7 +30,6 @@ class DatabaseSeeder extends Seeder
             $verification = Verification::factory()->create();
             if ($verification->status) {
                 Customer::factory()
-                    ->has(CustomerAddress::factory()->count(rand(1, 2)), 'addresses')
                     ->create([
                         'username' => $verification->phone,
                         'password' => bcrypt($verification->code),

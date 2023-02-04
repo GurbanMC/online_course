@@ -18,31 +18,31 @@ class CategorySeeder extends Seeder
         {
             $objs = [
                 ['Biznes we söwda', null, [
-                    ['Biznes ýöretmek', null, 'Sport Aýakgap', null],
-                    ['Buhgalteriýa', null, 'Ädik', null],
-                    ['Marketing', null, 'Şypbyk', null],
-                    ['Önümçilik', null, 'Sport Aýakgap', null],
-                    ['Söwda we satuw', null, 'Ädik', null],
-                    ['Söwda we syýahatçylyk', null, 'Şypbyk', null],
+                    ['Biznes ýöretmek', null, 'Biznes ýöretmek', null],
+                    ['Buhgalteriýa', null, 'Buhgalteriýa', null],
+                    ['Marketing', null, 'Marketing', null],
+                    ['Önümçilik', null, 'Önümçilik', null],
+                    ['Söwda we satuw', null, 'Söwda we satuw', null],
+                    ['Söwda we syýahatçylyk', null, 'Söwda we syýahatçylyk', null],
                 ]],
                 ['Dizaýn', null, [
-                    ['3D we animasiýa', null, 'Sagat', null],
-                    ['Adobe programmalry', null, 'Äýnek', null],
-                    ['Arhitektura we inženerçilik', null, 'Kemer', null],
-                    ['Web dizaýn', null, 'Gapjyk', null],
+                    ['3D we animasiýa', null, '3D we animasiýa', null],
+                    ['Adobe programmalry', null, 'Adobe programmalry', null],
+                    ['Arhitektura we inženerçilik', null, 'Arhitektura we inženerçilik', null],
+                    ['Web dizaýn', null, 'Web dizaýn', null],
                 ]],
                 ['Informatika we internet', null, [
-                    ['Informatika', null, 'Sagat', null],
-                    ['Internet we tor howpsuzlygy', null, 'Äýnek', null],
-                    ['Kompýuter programmalary', null, 'Kemer', null],
-                    ['Täze tehnologiýalar', null, 'Gapjyk', null],
+                    ['Informatika', null, 'Informatika', null],
+                    ['Internet we tor howpsuzlygy', null, 'Internet we tor howpsuzlygy', null],
+                    ['Kompýuter programmalary', null, 'Kompýuter programmalary', null],
+                    ['Täze tehnologiýalar', null, 'Täze tehnologiýalar', null],
                 ]],
                 ['Programmirleme', null, [
-                    ['Mobil priloženiýalary düzmek', null, 'Sagat', null],
-                    ['Oýunlary düzmek', null, 'Äýnek', null],
-                    ['Programmirleme dilleri', null, 'Kemer', null],
-                    ['Robotlar tehnologiýasy', null, 'Gapjyk', null],
-                    ['Web programmirleme', null, 'Gapjyk', null],
+                    ['Mobil priloženiýalary düzmek', null, 'Mobil priloženiýalary düzmek', null],
+                    ['Oýunlary düzmek', null, 'Oýunlary düzmek', null],
+                    ['Programmirleme dilleri', null, 'Programmirleme dilleri', null],
+                    ['Robotlar tehnologiýasy', null, 'Robotlar tehnologiýasy', null],
+                    ['Web programmirleme', null, 'Web programmirleme', null],
                 ]],
             ];
 
@@ -58,11 +58,12 @@ class CategorySeeder extends Seeder
                         'parent_id' => $category->id,
                         'name_tm' => $objs[$i][2][$j][0],
                         'name_en' => $objs[$i][2][$j][1],
-                        'product_name_tm' => $objs[$i][2][$j][2],
-                        'product_name_en' => $objs[$i][2][$j][3],
+                        'course_name_tm' => $objs[$i][2][$j][2],
+                        'course_name_en' => $objs[$i][2][$j][3],
                         'sort_order' => $j + 1,
                     ]);
                 }
             }
+        }
     }
 }
