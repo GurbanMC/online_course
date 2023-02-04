@@ -25,6 +25,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('categories', [UserPolicy::class, 'categories']);
+        Gate::define('brands', [UserPolicy::class, 'brands']);
+        Gate::define('attributes', [UserPolicy::class, 'attributes']);
+        Gate::define('products', [UserPolicy::class, 'products']);
+        Gate::define('orders', [UserPolicy::class, 'orders']);
+        Gate::define('customers', [UserPolicy::class, 'customers']);
+        Gate::define('verifications', [UserPolicy::class, 'verifications']);
+        Gate::define('locations', [UserPolicy::class, 'locations']);
+        Gate::define('users', [UserPolicy::class, 'users']);
+        Gate::define('authAttempts', [UserPolicy::class, 'authAttempts']);
+        Gate::define('ipAddresses', [UserPolicy::class, 'ipAddresses']);
+        Gate::define('userAgents', [UserPolicy::class, 'userAgents']);
     }
 }
