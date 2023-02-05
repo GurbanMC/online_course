@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('name_en')->nullable();
             $table->string('full_name_tm');
             $table->string('full_name_en')->nullable();
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('video')->nullable();
             $table->unsignedDouble('price')->default(0);
             $table->unsignedFloat('discount_percent')->default(0);

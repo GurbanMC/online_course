@@ -51,14 +51,14 @@ class Course extends Model
 
     public function attributeValues()
     {
-        return $this->belongsToMany(AttributeValue::class, 'product_attribute_value')
+        return $this->belongsToMany(AttributeValue::class, 'course_attribute_value')
             ->orderByPivot('sort_order');
     }
 
 
     public function customers()
     {
-        return $this->belongsToMany(Customer::class, 'customer_product')
+        return $this->belongsToMany(Customer::class, 'customer_course')
             ->orderBy('id', 'desc');
     }
 

@@ -15,6 +15,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
+        $modals = [
+            ['name' => 'customers', 'total' => Customer::count()],
+            ['name' => 'courses', 'total' => Course::count()],
+            ['name' => 'categories', 'total' => Category::count()],
+            ['name' => 'attributes', 'total' => Attribute::count()],
+        ];
     }
 }

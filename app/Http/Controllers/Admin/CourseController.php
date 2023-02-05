@@ -122,7 +122,7 @@ class CourseController extends Controller
                 ]);
                 $i += 1;
             }
-            $obj->image = $firstVideoName;
+            $obj->video = $firstVideoName;
             $obj->update();
         }
 
@@ -152,7 +152,7 @@ class CourseController extends Controller
         $videos = CourseVideo::where('course_id', $id)
             ->get();
 
-        return view('admin.product.edit')
+        return view('admin.course.edit')
             ->with([
                 'obj' => $obj,
                 'categories' => $categories,
@@ -218,7 +218,7 @@ class CourseController extends Controller
 
         return to_route('admin.products.index')
             ->with([
-                'success' => @trans('app.product') . $obj->getName() . @trans('app.updated') . '!'
+                'success' => @trans('app.course') . $obj->getName() . @trans('app.updated') . '!'
             ]);
     }
 
