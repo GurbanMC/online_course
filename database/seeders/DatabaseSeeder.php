@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             AttributeValueSeeder::class,
         ]);
 
-        Course::factory()->count(2000)->create();
+        Course::factory()->count(1000)->create();
 
         for ($i = 0; $i < 50; $i++) {
             $verification = Verification::factory()->create();

@@ -18,7 +18,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link link-dark" href="{{ route('admin.courses.index') }}">
-                    <i class="bi-box-fill text-danger me-1"></i> @lang('app.products')
+                    <i class="bi-box-fill text-danger me-1"></i> @lang('app.courses')
                 </a>
             </li>
             @can('categories')

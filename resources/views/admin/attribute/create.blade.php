@@ -39,7 +39,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="product_name" class="form-label fw-semibold">
-                        @lang('app.productName')
+                        @lang('app.courseName')
                     </label>
                     <div class="form-check @error('product_name') is-invalid @enderror">
                         <input class="form-check-input" type="radio" name="product_name" id="product_name1" value="1"

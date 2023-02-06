@@ -17,23 +17,6 @@
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
 
                 <div class="mb-3">
-                    <label for="brand" class="form-label fw-semibold">
-                        Brand
-                        <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select @error('brand') is-invalid @enderror" name="brand" id="brand" required
-                            autofocus>
-                        <option value>-</option>
-                        @foreach($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->getName() }}</option>
-                        @endforeach
-                    </select>
-                    @error('brand')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
                     <label for="category" class="form-label fw-semibold">
                         Category
                         <span class="text-danger">*</span>
@@ -131,18 +114,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="stock" class="form-label fw-semibold">
-                        @lang('app.stock')
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" min="0" class="form-control @error('stock') is-invalid @enderror" name="stock"
-                           id="stock" value="0" required>
-                    @error('stock')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
                     <label for="price" class="form-label fw-semibold">
                         @lang('app.price')
                         <span class="text-danger">*</span>
@@ -153,17 +124,6 @@
                         <span class="input-group-text">TMT</span>
                     </div>
                     @error('price')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="barcode" class="form-label fw-semibold">
-                        @lang('app.barcode')
-                    </label>
-                    <input type="text" class="form-control @error('barcode') is-invalid @enderror" name="barcode"
-                           id="barcode" value="{{ old('barcode') }}">
-                    @error('barcode')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>

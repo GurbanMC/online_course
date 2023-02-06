@@ -3,33 +3,6 @@
     <div class="col-auto">
         <a href="{{ route('admin.courses.index') }}" class="btn btn-sm btn-outline-danger">@lang('app.clear') <i class="bi-x"></i></a>
     </div>
-    <div class="col">
-        <select class="form-select form-select-sm" name="ordering" id="ordering" size="1" onchange="$('form#productFilter').submit();">
-            <option value>@lang('app.ordering'): @lang('app.default')</option>
-            @foreach(config()->get('mysettings.ordering')['a'] as $ordering)
-                <option value="{{ $ordering }}" {{ $ordering == $f_order ? 'selected' : '' }}>
-                    @lang('app.' . $ordering)
-                </option>
-            @endforeach
-        </select>
-        @error('ordering')
-        <div class="alert alert-danger mt-2">{{ $message }}</div>
-        @enderror
-    </div>
-
-    <div class="col">
-        <select class="form-select form-select-sm" name="brand" id="brand" size="1" onchange="$('form#productFilter').submit();">
-            <option value>@lang('app.brands')</option>
-            @foreach($brands as $brand)
-                <option value="{{ $brand->id }}" {{ $brand->id == $f_brand ? 'selected' : '' }}>
-                    {{ $brand->name . ' (' . $brand->courses_count . ')' }}
-                </option>
-            @endforeach
-        </select>
-        @error('brand')
-        <div class="alert alert-danger mt-2">{{ $message }}</div>
-        @enderror
-    </div>
 
     <div class="col">
         <select class="form-select form-select-sm" name="category" id="category" size="1" onchange="$('form#productFilter').submit();">

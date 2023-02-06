@@ -16,22 +16,6 @@
             @method('PUT')
             @csrf
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                <div class="mb-3">
-                    <label for="brand" class="form-label fw-semibold">
-                        Brand
-                        <span class="text-danger">*</span>
-                    </label>
-                    <select class="form-select @error('brand') is-invalid @enderror" name="brand" id="brand" required
-                            autofocus>
-                        <option value>-</option>
-                        @foreach($brands as $brand)
-                            <option value="{{ $brand->id }}" {{ $obj->brand_id == $brand->id ? 'selected':'' }}>{{ $brand->getName() }}</option>
-                        @endforeach
-                    </select>
-                    @error('brand')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 <div class="mb-3">
                     <label for="category" class="form-label fw-semibold">
@@ -116,18 +100,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="stock" class="form-label fw-semibold">
-                        @lang('app.stock')
-                        <span class="text-danger">*</span>
-                    </label>
-                    <input type="number" min="0" class="form-control @error('stock') is-invalid @enderror" name="stock"
-                           id="stock" value="{{ $obj->stock }}" required>
-                    @error('stock')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
                     <label for="price" class="form-label fw-semibold">
                         @lang('app.price')
                         <span class="text-danger">*</span>
@@ -142,70 +114,26 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="barcode" class="form-label fw-semibold">
-                        @lang('app.barcode')
-                    </label>
-                    <input type="text" class="form-control @error('barcode') is-invalid @enderror" name="barcode"
-                           id="barcode" value="{{ $obj->barcode }}">
-                    @error('barcode')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                 <div class="mb-3">
                     <label for="gender" class="form-label fw-semibold">
-                        @lang('app.gender')
+                        @lang('app.level')
                     </label>
-                    <select class="form-select @error('gender') is-invalid @enderror"
-                            name="gender"
-                            id="gender">
+                    <select class="form-select @error('level') is-invalid @enderror"
+                            name="level"
+                            id="level">
                         <option value>-</option>
                         @foreach($attributes[0]->values as $attributeValue)
-                            <option value="{{$attributeValue->id}}" {{ $attributeValue->id == $obj->gender_id ? 'selected' : ''}}>{{ $attributeValue->getName() }}</option>
+                            <option value="{{$attributeValue->id}}" {{ $attributeValue->id == $obj->level_id ? 'selected' : ''}}>{{ $attributeValue->getName() }}</option>
                         @endforeach
                     </select>
-                    @error('gender')
+                    @error('level')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="color" class="form-label fw-semibold">
-                        @lang('app.color')
-                    </label>
-                    <select class="form-select @error('color') is-invalid @enderror"
-                            name="color"
-                            id="color">
-                        <option value>-</option>
-                        @foreach($attributes[1]->values as $attributeValue)
-                            <option value="{{$attributeValue->id}}" {{ $attributeValue->id == $obj->color_id ? 'selected' : ''}}>{{ $attributeValue->getName() }}</option>
-                        @endforeach
-                    </select>
-                    @error('color')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="size" class="form-label fw-semibold">
-                        @lang('app.size')
-                    </label>
-                    <select class="form-select @error('size') is-invalid @enderror"
-                            name="size"
-                            id="size">
-                        <option value>-</option>
-                        @foreach($attributes[2]->values as $attributeValue)
-                            <option value="{{$attributeValue->id}}" {{ $attributeValue->id == $obj->size_id ? 'selected' : ''}}>{{ $attributeValue->getName() }}</option>
-                        @endforeach
-                    </select>
-                    @error('size')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                @if(count($attributes) > 3)
+                @if(count($attributes) > 1)
                     @foreach($attributes as $attribute)
                         <div class="mb-3">
                             <label for="{{ strtolower($attribute->name_en) }}" class="form-label fw-semibold">

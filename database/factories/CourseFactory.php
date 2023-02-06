@@ -40,7 +40,7 @@ class CourseFactory extends Factory
         $level = fake()->boolean(90)
             ? AttributeValue::where('attribute_id', 1)->inRandomOrder()->first() : null;
 
-        $nameTm = fake()->streetSuffix();
+        $nameTm = fake()->name();
         $nameEn = null;
 
         $fullNameTm = $nameTm . ' ';

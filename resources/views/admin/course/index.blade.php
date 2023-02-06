@@ -74,9 +74,6 @@
                             {{ number_format($obj->getPrice(), 2, '.', ' ') }}
                             <small>TMT</small>
                         </div>
-                        <div class="text-danger fw-semibold">
-                            <i class="bi-box-fill text-secondary"></i> {{ $obj->stock }}
-                        </div>
                     </td>
 
                     <td>
@@ -91,10 +88,6 @@
                         @endif
                     </td>
                     <td>
-                        <div>
-                            <i class="bi-bag-check-fill text-success"></i>
-                            {{ $obj->sold }}
-                        </div>
                         <div>
                             <i class="bi-heart-fill text-danger"></i>
                             {{ $obj->favorites }}
