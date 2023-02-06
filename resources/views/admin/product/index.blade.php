@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
 @section('title')
-    @lang('app.products')
+    @lang('app.courses')
 @endsection
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="h4 mb-0">
-            @lang('app.products')
+            @lang('app.courses')
         </div>
         <div>
-            @include('admin.product.filter')
+            @include('admin.course.filter')
         </div>
     </div>
 
@@ -33,20 +33,12 @@
                 <tr class="{{ $obj->isDiscount() ? 'table-info' : null}}">
                     <td>{{ $obj->id }}</td>
                     <td>
-                        <a href="{{ route('admin.products.show', $obj->id) }}" class="text-decoration-none">
+                        <a href="{{ route('admin.courses.show', $obj->id) }}" class="text-decoration-none">
                             <span class="font-monospace">{{ $obj->code }}</span>
                             <i class="bi-box-arrow-up-right"></i>
                         </a>
                     </td>
                     <td>
-                        <img src="{{ $obj->getImage() }}" alt="{{ $obj->image }}" class="img-fluid rounded" style="max-height:5rem;">
-                    </td>
-                    <td>
-                        <div>
-                            <i class="bi-github text-danger me-1"></i>
-                            {{ $obj->brand->name }}
-                        </div>
-
                         <div>
                             <i class="bi-grid-fill text-danger me-1"></i>
                             @if($obj->category->parent_id)
@@ -109,7 +101,7 @@
                         </div>
                     </td>
                     <td>
-                        <a href="{{ route('admin.products.edit', $obj->id) }}" class="btn btn-success btn-sm my-1">
+                        <a href="{{ route('admin.courses.edit', $obj->id) }}" class="btn btn-success btn-sm my-1">
                             <i class="bi-pencil"></i>
                         </a>
                         <button type="button" class="btn btn-secondary btn-sm my-1" data-bs-toggle="modal" data-bs-target="#delete{{ $obj->id }}">
@@ -125,7 +117,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="{{ route('admin.products.destroy', $obj->id) }}" method="post">
+                                        <form action="{{ route('admin.courses.destroy', $obj->id) }}" method="post">
                                             @method('DELETE')
                                             @csrf
                                             <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">@lang('app.close')</button>

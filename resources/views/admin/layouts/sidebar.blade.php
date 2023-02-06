@@ -7,11 +7,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link link-dark" href="{{ route('admin.orders.index') }}">
-                    <i class="bi-handbag-fill text-danger me-1"></i> @lang('app.orders')
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link link-dark" href="{{ route('admin.customers.index') }}">
                     <i class="bi-people-fill text-danger me-1"></i> @lang('app.customers')
                 </a>
@@ -22,7 +17,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link link-dark" href="{{ route('admin.products.index') }}">
+                <a class="nav-link link-dark" href="{{ route('admin.courses.index') }}">
                     <i class="bi-box-fill text-danger me-1"></i> @lang('app.products')
                 </a>
             </li>
@@ -33,24 +28,10 @@
                     </a>
                 </li>
             @endcan
-            @can('brands')
-                <li class="nav-item">
-                    <a class="nav-link link-dark" href="{{ route('admin.brands.index') }}">
-                        <i class="bi-github text-danger me-1"></i> @lang('app.brands')
-                    </a>
-                </li>
-            @endcan
             @can('attributes')
                 <li class="nav-item">
                     <a class="nav-link link-dark" href="{{ route('admin.attributes.index') }}">
                         <i class="bi-palette-fill text-danger me-1"></i> @lang('app.attributes')
-                    </a>
-                </li>
-            @endcan
-            @can('locations')
-                <li class="nav-item">
-                    <a class="nav-link link-dark" href="{{ route('admin.locations.index') }}">
-                        <i class="bi-geo-alt-fill text-danger me-1"></i> @lang('app.locations')
                     </a>
                 </li>
             @endcan

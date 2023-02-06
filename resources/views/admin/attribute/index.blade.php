@@ -24,7 +24,7 @@
                 <th scope="col">@lang('app.sortOrder')</th>
                 <th scope="col"><img src="{{ asset('img/flag/tkm.png') }}" alt="Türkmen" height="15"> Name</th>
                 <th scope="col"><img src="{{ asset('img/flag/eng.png') }}" alt="English" height="15"> Name</th>
-                <th scope="col">@lang('app.productName')</th>
+                <th scope="col">@lang('app.courseName')</th>
                 <th scope="col">@lang('app.values')</th>
                 <th scope="col"><i class="bi-gear-fill"></i></th>
             </tr>
@@ -52,12 +52,12 @@
                                             <td>{{ $value->name_tm }}</td>
                                             <td>{!! $value->name_en ?: '<span class="text-warning">' . $value->name_tm . '</span>' !!}</td>
                                             <td>
-                                                <a href="{{ route('admin.products.index', ['attributeValues' => $value->id, 'stock' => 1]) }}" class="text-decoration-none">
+                                                <a href="{{ route('admin.courses.index', ['attributeValues' => $value->id, 'stock' => 1]) }}" class="text-decoration-none">
                                                     {{ $value->in_stock_products_count }} <i class="bi-box-arrow-up-right"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.products.index', ['attributeValues' => $value->id, 'stock' => 0]) }}" class="text-decoration-none">
+                                                <a href="{{ route('admin.courses.index', ['attributeValues' => $value->id, 'stock' => 0]) }}" class="text-decoration-none">
                                                     {{ $value->out_of_stock_products_count }} <i class="bi-box-arrow-up-right"></i>
                                                 </a>
                                             </td>

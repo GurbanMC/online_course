@@ -46,7 +46,7 @@ class AttributeController extends Controller
         $request->validate([
             'name_tm' => ['required', 'string', 'max:255'],
             'name_en' => ['nullable', 'string', 'max:255'],
-            'product_name' => ['boolean'],
+            'course_name' => ['boolean'],
             'sort_order' => ['required', 'integer', 'min:1'],
         ]);
 
@@ -100,7 +100,7 @@ class AttributeController extends Controller
         ], [
             'name_tm' => $request->name_tm,
             'name_en' => $request->name_en ?: null,
-            'product_name' => $request->course_name ?: 0,
+            'course_name' => $request->course_name ?: 0,
             'sort_order' => $request->sort_order,
         ]);
 

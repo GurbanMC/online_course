@@ -1,7 +1,7 @@
-<form action="{{ route('admin.products.index') }}" class="row align-items-center g-2" role="search" id="productFilter">
+<form action="{{ route('admin.courses.index') }}" class="row align-items-center g-2" role="search" id="productFilter">
 
     <div class="col-auto">
-        <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-outline-danger">@lang('app.clear') <i class="bi-x"></i></a>
+        <a href="{{ route('admin.courses.index') }}" class="btn btn-sm btn-outline-danger">@lang('app.clear') <i class="bi-x"></i></a>
     </div>
     <div class="col">
         <select class="form-select form-select-sm" name="ordering" id="ordering" size="1" onchange="$('form#productFilter').submit();">
@@ -22,7 +22,7 @@
             <option value>@lang('app.brands')</option>
             @foreach($brands as $brand)
                 <option value="{{ $brand->id }}" {{ $brand->id == $f_brand ? 'selected' : '' }}>
-                    {{ $brand->name . ' (' . $brand->products_count . ')' }}
+                    {{ $brand->name . ' (' . $brand->courses_count . ')' }}
                 </option>
             @endforeach
         </select>
@@ -36,7 +36,7 @@
             <option value>@lang('app.categories')</option>
             @foreach($categories as $category)
                 <option value="{{ $category->id }}" {{ $category->id == $f_category ? 'selected' : '' }}>
-                    {{ $category->getName() . ' (' . $category->products_count . ')' }}
+                    {{ $category->getName() . ' (' . $category->courses_count . ')' }}
                 </option>
             @endforeach
         </select>
@@ -52,7 +52,7 @@
         <button type="submit" class="btn btn-dark btn-sm"><i class="bi-search"></i></button>
     </div>
     <div class="col-auto">
-        <a href="{{ route('admin.products.create') }}" class="btn btn-danger btn-sm">
+        <a href="{{ route('admin.courses.create') }}" class="btn btn-danger btn-sm">
             <i class="bi-plus-lg"></i> @lang('app.add')
         </a>
     </div>

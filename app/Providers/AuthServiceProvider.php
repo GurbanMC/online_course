@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('categories', [UserPolicy::class, 'categories']);
         Gate::define('attributes', [UserPolicy::class, 'attributes']);
-        Gate::define('courses', [UserPolicy::class, 'course']);
+        Gate::define('courses', [UserPolicy::class, 'courses']);
         Gate::define('customers', [UserPolicy::class, 'customers']);
         Gate::define('verifications', [UserPolicy::class, 'verifications']);
         Gate::define('users', [UserPolicy::class, 'users']);

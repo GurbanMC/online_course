@@ -36,9 +36,6 @@
                     <td>{{ $obj->id }}</td>
                     <td>{{ $obj->sort_order }}</td>
                     <td>
-                        <img src="{{  $obj->getImage() }}" alt="{{ $obj->getName() }}" class="img-fluid rounded" style="max-height:5rem;">
-                    </td>
-                    <td>
                         @if($obj->parent_id)
                             {{ $obj->parent->name_tm }} /
                         @endif
@@ -53,21 +50,12 @@
                         {!! $obj->name_en ?: '<span class="text-warning">' . $obj->name_tm . '</span>' !!}
                     </td>
                     <td>
-                        {{ $obj->product_name_tm }}
+                        {{ $obj->courses_name_tm }}
                     </td>
                     <td>
-                        {!! $obj->product_name_en ?: '<span class="text-warning">' . $obj->product_name_tm . '</span>' !!}
+                        {!! $obj->courses_name_en ?: '<span class="text-warning">' . $obj->product_name_tm . '</span>' !!}
                     </td>
-                    <td>
-                        <a href="{{ route('admin.products.index', ['category' => $obj->id, 'stock' => 1]) }}" class="text-decoration-none">
-                            {{ $obj->in_stock_products_count }} <i class="bi-box-arrow-up-right"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.products.index', ['category' => $obj->id, 'stock' => 0]) }}" class="text-decoration-none">
-                            {{ $obj->out_of_stock_products_count }} <i class="bi-box-arrow-up-right"></i>
-                        </a>
-                    </td>
+
                     <td>
                         <a href="{{ route('admin.categories.edit', $obj->id) }}" class="btn btn-success btn-sm my-1">
                             <i class="bi-pencil"></i>

@@ -144,7 +144,7 @@ class CategoryController extends Controller
 
         $objName = $obj->name;
 
-        if ($obj->child_count > 0 or $obj->product_count > 0) {
+        if ($obj->child_count > 0 or $obj->course_count > 0) {
             return redirect()->back()
                 ->with([
                     'error' => trans('app.error') . '!'

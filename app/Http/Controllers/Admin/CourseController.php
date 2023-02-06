@@ -41,7 +41,7 @@ class CourseController extends Controller
             ->paginate(50)
             ->withQueryString();
 
-        $categories = Category::whereNotNull('parent_id')->withCount('products')
+        $categories = Category::whereNotNull('parent_id')->withCount('courses')
             ->orderBy('sort_order')
             ->get();
 
@@ -117,7 +117,7 @@ class CourseController extends Controller
                 }
                 Storage::putFileAs('public/p', $video, $name);
                 CourseVideo::create([
-                    'product_id' => $obj->id,
+                    'course_id' => $obj->id,
                     'video' => $name,
                 ]);
                 $i += 1;
@@ -126,9 +126,9 @@ class CourseController extends Controller
             $obj->update();
         }
 
-        return to_route('admin.products.index')
+        return to_route('admin.courses.index')
             ->with([
-                'success' => @trans('app.product') . $obj->getName() . @trans('app.added') . '!'
+                'success' => @trans('app.course') . $obj->getName() . @trans('app.added') . '!'
             ]);
     }
 
@@ -216,7 +216,7 @@ class CourseController extends Controller
             $obj->update();
         }
 
-        return to_route('admin.products.index')
+        return to_route('admin.courses.index')
             ->with([
                 'success' => @trans('app.course') . $obj->getName() . @trans('app.updated') . '!'
             ]);

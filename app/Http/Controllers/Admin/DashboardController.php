@@ -21,5 +21,10 @@ class DashboardController extends Controller
             ['name' => 'categories', 'total' => Category::count()],
             ['name' => 'attributes', 'total' => Attribute::count()],
         ];
+
+        return view('admin.dashboard.index')
+            ->with([
+                'modals' => $modals,
+            ]);
     }
 }

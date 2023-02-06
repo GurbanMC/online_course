@@ -1,17 +1,17 @@
 @extends('admin.layouts.app')
 @section('title')
-    @lang('app.products')
+    @lang('app.courses')
 @endsection
 @section('content')
     <div class="h4 mb-3">
-        <a href="{{ route('admin.products.index') }}" class="text-decoration-none">
-            @lang('app.products')
+        <a href="{{ route('admin.courses.index') }}" class="text-decoration-none">
+            @lang('app.courses')
         </a>
         <i class="bi-chevron-right small"></i>
         @lang('app.edit')
     </div>
 
-    <form action="{{ route('admin.products.update', $obj->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.courses.update', $obj->id) }}" method="post" enctype="multipart/form-data">
         <div class="row mb-3 pe-4">
             @method('PUT')
             @csrf
