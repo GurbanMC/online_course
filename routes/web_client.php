@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LoginController;
@@ -27,8 +27,6 @@ Route::controller(CartController::class)
         Route::get('', 'index')->name('index');
         Route::get('/add/{id}', 'add')->name('add')->where('id', '[0-9]+');
         Route::get('/remove/{id}', 'remove')->name('remove')->where('id', '[0-9]+');
-        Route::get('/increase/{id}', 'increase')->name('increase')->where('id', '[0-9]+');
-        Route::get('/decrease/{id}', 'decrease')->name('decrease')->where('id', '[0-9]+');
         Route::get('/clear', 'clear')->name('clear');
     });
 

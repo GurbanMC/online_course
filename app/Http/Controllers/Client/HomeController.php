@@ -16,27 +16,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categoryCourses = [];
-        $categories = Category::where('home', 1)
-            ->orderBy('sort_order')
-            ->orderBy('slug')
+        $categories = Category::orderBy('sort_order')
+            ->with('parent', 'courses')
             ->get();
 
-        foreach ($categories as $category) {
-            $categoryCourses[] = [
-                'category' => $category,
-                'courses' => Course::where('category_id', $category->id)
-                    ->with('user')
-                    ->inRandomOrder()
-                    ->take(6)
-                    ->get(),
-            ];
-        }
-
-        return view('home.index')
+        return view('client.home.index')
             ->with([
-                'categoryCourses' => collect($categoryCourses),
+                'categories' => $categories
             ]);
+
     }
 
 
