@@ -10,7 +10,7 @@
         <i class="bi-chevron-right small"></i>
         @lang('app.edit')
     </div>
-    <div class="row mb-3">
+    <div class="row mb-3 text-light">
         <div class="col-10 col-sm-8 col-md-6 col-lg-4">
             <form action="{{ route('admin.attributes.update', $obj->id) }}" method="post">
                 @method('PUT')
@@ -39,24 +39,24 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="product_name" class="form-label fw-semibold">
-                        @lang('app.productName')
+                    <label for="course_name" class="form-label fw-semibold">
+                        @lang('app.coursenNme')
                     </label>
-                    <div class="form-check @error('product_name') is-invalid @enderror">
-                        <input class="form-check-input" type="radio" name="product_name" id="product_name1"
-                               value="1" {{ $obj->product_name == 1 ? 'checked':'' }}>
-                        <label class="form-check-label" for="product_name1">
+                    <div class="form-check @error('course_name') is-invalid @enderror">
+                        <input class="form-check-input" type="radio" name="course_name" id="course_name1"
+                               value="1" {{ $obj->course_name == 1 ? 'checked':'' }}>
+                        <label class="form-check-label" for="course_name1">
                             <i class="bi bi-check-circle-fill text-success"></i>
                         </label>
                     </div>
-                    <div class="form-check @error('product_name') is-invalid @enderror">
-                        <input class="form-check-input" type="radio" name="product_name" id="product_name2"
-                               value="0" {{ $obj->product_name == 0 ? 'checked':'' }}>
-                        <label class="form-check-label" for="product_name2">
+                    <div class="form-check @error('course_name') is-invalid @enderror">
+                        <input class="form-check-input" type="radio" name="course_name" id="course_name2"
+                               value="0" {{ $obj->course_name == 0 ? 'checked':'' }}>
+                        <label class="form-check-label" for="course_name2">
                             <i class="bi bi-x-circle-fill text-danger"></i>
                         </label>
                     </div>
-                    @error('product_name')
+                    @error('course_name')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>

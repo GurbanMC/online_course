@@ -11,7 +11,7 @@
         @lang('app.edit')
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-3 text-light">
         <div class="col-10 col-sm-8 col-md-6 col-lg-4">
             <form action="{{ route('admin.users.update', $obj->id) }}" method="post">
                 @method('PUT')

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_tm');
             $table->string('name_en')->nullable();
-            $table->boolean('course_name')->default(0);
+            $table->boolean('course_name')->nullable();
             $table->unsignedInteger('sort_order')->default(1);
         });
     }

@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
 </head>
-<body>
+<body style="background-color: #1B2431">
 @include('admin.layouts.alert')
 <!-- Section: Design Block -->
 <section class="">
     <!-- Jumbotron -->
-    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start"    >
         <div class="container">
             <div class="row gx-lg-5 align-items-center">
                 <div class="col-lg-6">

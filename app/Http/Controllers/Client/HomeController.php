@@ -16,30 +16,43 @@ class HomeController extends Controller
 {
     public function index()
     {
-//        CATEGORY INDEX
-//        $response = Http::get('http://127.0.0.1:8000/api/v1/categories', [
-//            'api_id' => 'c11',
-//        ]);
+        $categoryCourses = [];
+        $categories = Category::where('home', 1)
+            ->orderBy('sort_order')
+            ->orderBy('slug')
+            ->get();
 
-//        BRAND INDEX
-//        $response = Http::get('http://127.0.0.1:8000/api/v1/brands', [
-//            'api_id' => 'c11',
-//        ]);
+        foreach ($categories as $category) {
+            $categoryCourses[] = [
+                'category' => $category,
+                'courses' => Course::where('category_id', $category->id)
+                    ->with('user')
+                    ->inRandomOrder()
+                    ->take(6)
+                    ->get(),
+            ];
+        }
 
-//        BRAND STORE
-//        $response = Http::post('http://127.0.0.1:8000/api/v1/brands', [
-//            'api_id' => 'c11',
-//            'name' => 'Gala',
-//        ]);
+        return view('home.index')
+            ->with([
+                'categoryCourses' => collect($categoryCourses),
+            ]);
+    }
 
-//        BRAND UPDATE
-//        $response = Http::put('http://127.0.0.1:8000/api/v1/brands/13', [
-//            'api_id' => 'c11',
-//            'name' => 'Ýeňiş',
-//        ]);
 
-//        return $response;
-
-        return view('client.home.index');
+    public function language($locale)
+    {
+        switch ($locale) {
+            case 'tm':
+                session()->put('locale', 'tm');
+                return redirect()->back();
+                break;
+            case 'en':
+                session()->put('locale', 'en');
+                return redirect()->back();
+                break;
+            default:
+                return redirect()->back();
+        }
     }
 }

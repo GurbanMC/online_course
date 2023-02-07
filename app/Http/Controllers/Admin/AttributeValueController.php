@@ -16,7 +16,7 @@ class AttributeValueController extends Controller
      */
     public function create()
     {
-        $$attributes = Attribute::orderBy('sort_order')
+        $attributes = Attribute::orderBy('sort_order')
             ->get();
 
         return view('admin.attribute.value.create')

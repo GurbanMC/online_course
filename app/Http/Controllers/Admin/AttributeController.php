@@ -91,7 +91,7 @@ class AttributeController extends Controller
         $request->validate([
             'name_tm' => ['required', 'string', 'max:255'],
             'name_en' => ['nullable', 'string', 'max:255'],
-            'course_name' => ['nullable|string|max:255'],
+            'course_name' => ['boolean'],
             'sort_order' => ['required', 'integer', 'min:1'],
         ]);
 
