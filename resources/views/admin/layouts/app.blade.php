@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
-<body>
+<body style="background-color: #1B2431">
 @include('admin.layouts.header')
 <div class="container-fluid">
     <div class="row">

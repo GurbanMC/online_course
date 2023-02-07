@@ -11,11 +11,11 @@
         @lang('app.edit')
     </div>
 
-    <form action="{{ route('admin.courses.update', $obj->id) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.courses.update', $obj->id) }}" method="post" enctype="multipart/form-data" class="text-light">
         <div class="row mb-3 pe-4">
             @method('PUT')
             @csrf
-            <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+            <div class="col-10 col-sm-8 col-md-6 col-lg-4 text-light">
 
                 <div class="mb-3">
                     <label for="category" class="form-label fw-semibold">
@@ -117,7 +117,7 @@
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                 <div class="mb-3">
-                    <label for="gender" class="form-label fw-semibold">
+                    <label for="level" class="form-label fw-semibold">
                         @lang('app.level')
                     </label>
                     <select class="form-select @error('level') is-invalid @enderror"
@@ -153,32 +153,6 @@
                         </div>
                     @endforeach
                 @endif
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label fw-semibold">
-                    @lang('app.image')
-                </label>
-                <div class="row">
-                    @if(count($images) > 0)
-                    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                        @foreach($images as $image)
-                            <img src="{{  $image }}" alt="{{ $obj->getName() }}" class="img-fluid rounded"
-                                 style="max-height:5rem;">
-                        @endforeach
-                    </div>
-                    @endif
-                    <div class="col-10 col-sm-8 col-md-6 col-lg-4">
-                        <div class="input-group mb-3">
-                            <input type="file" accept="image/jpeg"
-                                   class="form-control @error('image') is-invalid @enderror"
-                                   name="images[]" id="image" multiple>
-                            <label class="input-group-text" for="image">Upload</label>
-                        </div>
-                        @error('image')
-                        <div class="alert alert-danger mt-2">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
             </div>
             <button type="submit" class="btn btn-primary">
                 @lang('app.add')

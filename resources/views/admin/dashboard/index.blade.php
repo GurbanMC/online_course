@@ -5,9 +5,9 @@
 @section('content')
     <div class="row g-3 mb-4">
         @foreach($modals as $modal)
-            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="col-8 col-md-6 col-lg-4 col-xl-3">
                 <a href="{{ route('admin.' . $modal['name'] . '.index') }}" class="text-decoration-none text-dark">
-                    <div class="border bg-light rounded p-3">
+                    <div class="border rounded-4 text-light fw-bold p-3" style="background-color: {{$modal['color']}}">
                         <div class="fs-5">
                             @lang('app.' . $modal['name'])
                         </div>

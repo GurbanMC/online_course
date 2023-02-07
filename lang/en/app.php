@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'app-name' => 'Geýim',
+    'app-name' => 'Online learning',
     'search' => 'Search',
 
     'dashboard' => 'Dashboard',
@@ -12,8 +12,8 @@ return [
     'course' => 'Course',
     'courses' => 'Courses',
     'parentCategory' => 'Parent Category',
-    'productName' => 'Product name',
-    'productNames' => 'Product names',
+    'courseName' => 'Course name',
+    'courseNames' => 'Course names',
     'attribute' => 'Attribute',
     'attributes' => 'Attributes',
     'value' => 'Value',
@@ -36,6 +36,7 @@ return [
     'userAgents' => 'UserAgents',
     'authAttempt' => 'AuthAttempt',
     'authAttempts' => 'AuthAttempts',
+    'level' => 'Level',
 
     'login' => 'Login',
     'logout' => 'Logout',
@@ -96,55 +97,6 @@ return [
     'deleted' => 'deleted',
 
     'error' => 'Error',
-
-    // OrderProduct
-    'default' => 'Default',
-    'orderProducts' => 'Order products',
-    'changeQuantity' => 'Change quantity',
-    'action' => 'Action',
-    'totalPrice' => 'Total Price',
-    'created' => 'Created',
-    'orderUpdated' => 'Order Updated',
-    'back' => 'Back',
-    'paid' => 'Paid',
-    'subtotal' => 'Subtotal',
-    'delivery' => 'Delivery',
-    'total' => 'Total',
-    'item' => 'item',
-    'items' => 'items',
-    'totalOrders' => 'Total orders',
-    'ordered' => 'Ordered',
-    'ago' => 'ago',
-    'deliveryService' => 'Delivery service',
-
-    'shippingInformation' => 'Shipping Information',
-    'customerInformation' => 'Customer Information',
-    'additionalDetails' => 'Additional details',
-
-    'deliveryAddress' => 'Delivery address',
-    'deliveryStatus' => 'Delivery status',
-    'codeDelete' => '#:code deleted',
-    'notes' => 'Notes',
-    'cantUpdate' => 'Cannot update',
-    'orderCanceledError' => '<b>:name</b> is canceled this order by his/her own consideration!' ,
-    'orderStatusUpdated' => 'Order status changed to <b>:status</b>',
-    'productCode' => 'Product code',
-    'status' => 'Status',
-    'language' => 'Language',
-    'payment' => 'Payment',
-    'platform' => 'Platform',
-    'code' => 'Code',
-    'trashed' => 'Trashed',
-    'statistics' => 'Statistic',
-
-    'totalIncome' => 'Total income',
-    'thisMonth' => 'This Month',
-    'thisWeek' => 'This Week',
-    'today' => 'Today',
-
-    'yes' => 'Yes',
-    'no' => 'No',
-    'opDelete' => 'Remove <b>ID: :id</b> from this order?',
 
     // Products
     'productNotFound' => 'Product not found',

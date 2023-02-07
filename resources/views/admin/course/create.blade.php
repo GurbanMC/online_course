@@ -11,7 +11,7 @@
         @lang('app.add')
     </div>
 
-    <form action="{{ route('admin.courses.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.courses.store') }}" method="post" enctype="multipart/form-data" class="text-light">
         <div class="row mb-3 pe-4">
             @csrf
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
@@ -72,20 +72,6 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="image" class="form-label fw-semibold">
-                        @lang('app.image')
-                    </label>
-                    <div class="input-group mb-3">
-                        <input type="file" accept="image/jpeg"
-                               class="form-control @error('image') is-invalid @enderror"
-                               name="images[]" id="image" multiple>
-                        <label class="input-group-text" for="image">Upload</label>
-                    </div>
-                    @error('image')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
             </div>
             <div class="col-10 col-sm-8 col-md-6 col-lg-4">
                 <div class="mb-3">

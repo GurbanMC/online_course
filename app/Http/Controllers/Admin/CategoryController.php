@@ -18,6 +18,12 @@ class CategoryController extends Controller
     {
         $objs = Category::orderBy('sort_order')
             ->with('parent')
+                ->withCount([
+                    'courses as courses_count' => function ($query) {
+                        $query->where('category_id', '>', 0);
+                    }
+            ])
+
             ->get();
 
         return view('admin.category.index')

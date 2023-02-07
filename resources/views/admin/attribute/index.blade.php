@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-dark table-striped">
             <thead>
             <tr class="text-center">
                 <th scope="col">ID</th>
@@ -37,8 +37,8 @@
                     <td>{{ $obj->name_tm }}</td>
                     <td>{!! $obj->name_en ?: '<span class="text-warning">' . $obj->name_tm . '</span>' !!}</td>
                     <td>
-                        {!! $obj->product_name == 0 ? '<i class="bi bi-x-circle-fill text-danger"></i>':'' !!}
-                        {!! $obj->product_name == 1 ? '<i class="bi bi-check-circle-fill text-success"></i>':'' !!}
+                        {!! $obj->course_name == 0 ? '<i class="bi bi-x-circle-fill text-danger"></i>':'' !!}
+                        {!! $obj->course_name == 1 ? '<i class="bi bi-check-circle-fill text-success"></i>':'' !!}
                     </td>
                     <td class="p-1">
                         <div class="collapse" id="collapse{{ $obj->id }}">
@@ -52,13 +52,8 @@
                                             <td>{{ $value->name_tm }}</td>
                                             <td>{!! $value->name_en ?: '<span class="text-warning">' . $value->name_tm . '</span>' !!}</td>
                                             <td>
-                                                <a href="{{ route('admin.courses.index', ['attributeValues' => $value->id, 'stock' => 1]) }}" class="text-decoration-none">
-                                                    {{ $value->in_stock_products_count }} <i class="bi-box-arrow-up-right"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('admin.courses.index', ['attributeValues' => $value->id, 'stock' => 0]) }}" class="text-decoration-none">
-                                                    {{ $value->out_of_stock_products_count }} <i class="bi-box-arrow-up-right"></i>
+                                                <a href="{{ route('admin.courses.index', ['attributeValues' => $value->id, 'attribute_value_id' => 0]) }}" class="text-decoration-none">
+                                                    {{ $value->courses_count }} <i class="bi-box-arrow-up-right"></i>
                                                 </a>
                                             </td>
                                             <td>

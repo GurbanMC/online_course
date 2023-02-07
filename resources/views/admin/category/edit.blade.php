@@ -11,7 +11,7 @@
         @lang('app.edit')
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-3 text-light">
         <div class="col-10 col-sm-8 col-md-6 col-lg-4">
             <form action="{{ route('admin.categories.update', $obj->id) }}" method="post">
                 @method('PUT')
@@ -57,23 +57,23 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="product_name_tm" class="form-label fw-semibold">
+                    <label for="course_name_tm" class="form-label fw-semibold">
                         <img src="{{ asset('img/flag/tkm.png') }}" alt="Türkmen" height="15">
-                        Product name
+                        Course name
                     </label>
-                    <input type="text" class="form-control @error('product_name_tm') is-invalid @enderror" name="product_name_tm" id="product_name_tm" value="{{ $obj->product_name_tm }}">
-                    @error('product_name_tm')
+                    <input type="text" class="form-control @error('course_name_tm') is-invalid @enderror" name="course_name_tm" id="course_name_tm" value="{{ $obj->course_name_tm }}">
+                    @error('course_name_tm')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="product_name_en" class="form-label fw-semibold">
+                    <label for="course_name_en" class="form-label fw-semibold">
                         <img src="{{ asset('img/flag/eng.png') }}" alt="English" height="15">
-                        Product name
+                        Course name
                     </label>
-                    <input type="text" class="form-control @error('product_name_en') is-invalid @enderror" name="product_name_en" id="product_name_en" value="{{ $obj->product_name_en }}">
-                    @error('product_name_en')
+                    <input type="text" class="form-control @error('course_name_en') is-invalid @enderror" name="course_name_en" id="course_name_en" value="{{ $obj->course_name_en }}">
+                    @error('course_name_en')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
@@ -85,16 +85,6 @@
                     </label>
                     <input type="number" min="1" class="form-control @error('sort_order') is-invalid @enderror" name="sort_order" id="sort_order" value="{{ $obj->sort_order }}" required>
                     @error('sort_order')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="image" class="form-label fw-semibold">
-                        @lang('app.image')
-                    </label>
-                    <input type="file" accept="image/jpeg" class="form-control @error('image') is-invalid @enderror" name="image" id="image">
-                    @error('image')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>

@@ -13,13 +13,12 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-dark table-striped table-hover">
             <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Code</th>
-                <th scope="col">Image</th>
-                <th scope="col" width="15%">Brand & Category</th>
+                <th scope="col" width="15%">Category</th>
                 <th scope="col">Name</th>
                 <th scope="col" width="20%">Full Name</th>
                 <th scope="col">Price</th>
@@ -28,9 +27,9 @@
                 <th scope="col"><i class="bi-gear-fill"></i></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="text-light">
             @forelse($objs as $obj)
-                <tr class="{{ $obj->isDiscount() ? 'table-info' : null}}">
+                <tr class="{{ $obj->isDiscount() ? 'table-warning' : null}}">
                     <td>{{ $obj->id }}</td>
                     <td>
                         <a href="{{ route('admin.courses.show', $obj->id) }}" class="text-decoration-none">

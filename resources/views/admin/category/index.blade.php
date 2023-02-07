@@ -15,18 +15,16 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-striped">
+        <table class="table table-dark table-hover table-striped">
             <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">@lang('app.sortOrder')</th>
-                <th scope="col">@lang('app.image')</th>
                 <th scope="col"><img src="{{ asset('img/flag/tkm.png') }}" alt="Türkmen" height="15"> Name</th>
                 <th scope="col"><img src="{{ asset('img/flag/eng.png') }}" alt="English" height="15"> Name</th>
-                <th scope="col"><img src="{{ asset('img/flag/tkm.png') }}" alt="Türkmen" height="15"> Product name</th>
-                <th scope="col"><img src="{{ asset('img/flag/eng.png') }}" alt="English" height="15"> Product name</th>
+                <th scope="col"><img src="{{ asset('img/flag/tkm.png') }}" alt="Türkmen" height="15"> Course name</th>
+                <th scope="col"><img src="{{ asset('img/flag/eng.png') }}" alt="English" height="15"> Course name</th>
                 <th scope="col">In stocks</th>
-                <th scope="col">Out of stocks</th>
                 <th scope="col"><i class="bi-gear-fill"></i></th>
             </tr>
             </thead>
@@ -55,7 +53,11 @@
                     <td>
                         {!! $obj->courses_name_en ?: '<span class="text-warning">' . $obj->product_name_tm . '</span>' !!}
                     </td>
-
+                    <td>
+                        <a href="{{ route('admin.courses.index', ['category' => $obj->id, 'count' => 1]) }}" class="text-decoration-none">
+                            {{ $obj->courses_count }} <i class="bi-box-arrow-up-right"></i>
+                        </a>
+                    </td>
                     <td>
                         <a href="{{ route('admin.categories.edit', $obj->id) }}" class="btn btn-success btn-sm my-1">
                             <i class="bi-pencil"></i>

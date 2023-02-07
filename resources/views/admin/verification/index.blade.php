@@ -13,9 +13,9 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-striped">
+        <table class="table table-dark table-striped table-hover">
             <thead>
-            <tr>
+            <tr class="text-light">
                 <th scope="col">ID</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Code</th>
@@ -35,7 +35,7 @@
                         </a>
                     </td>
                     <td>{{ $obj->code }}</td>
-                    <td><span class="badge text-bg-{{ $obj->statusColor() }}">{{ $obj->status() }}</span></td>
+                    <td><span class="badge text-light text-bg-{{ $obj->statusColor() }}">{{ $obj->status() }}</span></td>
                     <td>{{ $obj->created_at }}</td>
                     <td>{{ $obj->updated_at }}</td>
                 </tr>

@@ -43,8 +43,12 @@ class CourseFactory extends Factory
         $nameTm = fake()->name();
         $nameEn = null;
 
-        $fullNameTm = $nameTm . ' ';
-        $fullNameEn = ($nameEn ?: $nameTm) . ' ';
+        $fullNameTm = $nameTm . ' '
+            . (isset($level) ? $level->name_tm . ' ' : '')
+            . $category->course_name_tm;
+        $fullNameEn = ($nameEn ?: $nameTm) . ' '
+            . (isset($level) ? ($level->name_en ?: $level->name_tm) . ' ' : '')
+            . ($category->course_name_en ?: $category->course_name_tm);
 
         $hasDiscount = fake()->boolean(20);
 
@@ -58,7 +62,7 @@ class CourseFactory extends Factory
             'full_name_tm' => $fullNameTm,
             'full_name_en' => $fullNameEn,
             'slug' => str()->slug($fullNameTm) . '-' . str()->random(10),
-            'price' => fake()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 50),
+            'price' => fake()->randomFloat($nbMaxDecimals = 1, $min = 0, $max = 10),
             'discount_percent' => $hasDiscount
                 ? rand(10, 20) : 0,
             'discount_start' => $hasDiscount

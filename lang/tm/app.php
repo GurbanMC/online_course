@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'app-name' => 'Geýim',
+    'app-name' => 'Onlaýn okuw',
     'search' => 'Gözleg',
 
     'dashboard' => 'Panel',
@@ -11,8 +11,8 @@ return [
     'categories' => 'Kategoriýalar',
     'course' => 'Kurs',
     'courses' => 'Kurslar',
-    'productName' => 'Haryt ady',
-    'productNames' => 'Haryt atlary',
+    'courseName' => 'Kurs ady',
+    'courseNames' => 'Kurs atlary',
     'attribute' => 'Aýratynlyk',
     'attributes' => 'Aýratynlyklar',
     'value' => 'Görnüşi',
@@ -35,6 +35,7 @@ return [
     'userAgents' => null,
     'authAttempt' => null,
     'authAttempts' => null,
+    'level' => 'Dereje',
 
     'login' => 'Ulgama girmek',
     'logout' => 'Ulgamdan çykmak',
@@ -83,56 +84,6 @@ return [
     'deleted' => 'pozuldy',
 
     'error' => 'Näsazlyk',
-
-    // OrderProduct
-    'default' => 'Default',
-    'orderProducts' => 'Sargalan harytler',
-    'changeQuantity' => 'Mukdaryny üýtgetmek',
-    'action' => 'Action',
-    'totalPrice' => 'Jemi bahasy',
-    'created' => 'Döredildi',
-    'orderUpdated' => 'Sargalan haryt üýtgedildi',
-    'back' => 'Yza',
-
-    'paid' => 'Tölendi',
-    'subtotal' => 'Jemi',
-    'delivery' => null,
-    'total' => 'Jemi',
-    'item' => null,
-    'items' => null,
-    'totalOrders' => 'Umumy Sargytlar',
-    'ordered' => 'Sargaldy',
-    'ago' => 'öň',
-    'deliveryService' => 'Gowşurmak hyzmaty',
-
-    'shippingInformation' => 'Iberiş maglumatlary',
-    'customerInformation' => 'Müşderi maglumatlary',
-    'additionalDetails' => 'Goşmaça maglumatlar',
-
-    'deliveryAddress' => 'Gowşurmaly salgysy',
-    'deliveryStatus' => 'Gowşuryş belligi',
-    'codeDelete' => '#:code pozuldy',
-    'notes' => 'Bellikler',
-    'cantUpdate' => 'Üýtgedip bolmaýar',
-    'orderCanceledError' => '<b>:name</b> öz rugsady bilen ýatyryldy!' ,
-    'orderStatusUpdated' => 'Sargyt belgisi <b>:status</b>-a üýtgedildi',
-    'productCode' => 'Haryt kody',
-    'status' => 'Belgisi',
-    'language' => 'Dil',
-    'payment' => 'Töleg',
-    'platform' => null,
-    'code' => 'Kod',
-    'trashed' => 'Zibilde',
-    'statistics' => 'Statistika',
-
-    'totalIncome' => 'Umumy girdeji',
-    'thisMonth' => 'Şu aý',
-    'thisWeek' => 'Şu hepde',
-    'today' => 'Şugün',
-
-    'yes' => 'Hawa',
-    'no' => 'Ýok',
-    'opDelete' => '<b>ID: :id</b> bolan harydy aýyrjakmy?',
 
     // Products
     'productNotFound' => 'Haryt tapylmady',
