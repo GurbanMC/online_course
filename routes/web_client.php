@@ -40,14 +40,14 @@ Route::controller(VerificationController::class)
 Route::controller(LoginController::class)
     ->middleware('guest:customer_web')
     ->group(function () {
-        Route::get('/login', 'create')->name('login');
-        Route::post('/login', 'store');
+        Route::get('/login', 'create')->name('client.login');
+        Route::post('/login', 'store')->middleware(ProtectAgainstSpam::class);
     });
 
 Route::controller(LoginController::class)
     ->middleware('auth:customer_web')
     ->group(function () {
-        Route::post('/logout', 'destroy')->name('logout');
+        Route::post('/logout', 'destroy')->name('client.logout');
     });
 Route::middleware('auth')
     ->prefix('/client')

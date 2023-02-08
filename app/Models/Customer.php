@@ -14,6 +14,12 @@ class Customer extends Model
         'id',
     ];
 
+    protected $fillable = [
+        'name',
+        'username',
+        'password',
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -29,5 +35,10 @@ class Customer extends Model
     {
         return $this->belongsToMany(Course::class, 'customer_course')
             ->orderBy('id', 'desc');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }
