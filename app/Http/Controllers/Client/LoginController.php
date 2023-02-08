@@ -43,8 +43,7 @@ class LoginController extends Controller
 
         Auth::login($customer);
 
-        return redirect()->route('home')
-            ->with('success', 'Welcome ' . $customer->name . '!');
+        return to_route('admin.dashboard');
     }
 
 

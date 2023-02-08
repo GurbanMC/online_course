@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="{{ route('logout') }}"
+            <a class="nav-link px-3" href="{{ route('admin.logout') }}"
                onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                 <i class="bi-box-arrow-right"></i> @lang('app.logout')
             </a>
