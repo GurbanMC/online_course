@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Client;
 
 use App\Models\Attribute;
 use App\Http\Controllers\Controller;
+use App\Models\AttributeValue;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\CourseVideo;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -19,88 +22,38 @@ class CourseController extends Controller
     {
         $request->validate([
             'q' => 'nullable|string|max:255',
-            'u' => 'nullable|array', // users
-            'u.*' => 'nullable|integer|min:0|distinct',
-            'c' => 'nullable|array', // categories
-            'c.*' => 'nullable|integer|min:0|distinct',
-            'v' => 'nullable|array', // values
-            'v.*' => 'nullable|array',
-            'v.*.*' => 'nullable|integer|min:0|distinct',
-            'has_discount' => 'nullable|boolean',
-            'has_credit' => 'nullable|boolean',
+            'category' => 'nullable|integer|min:1|exists:categories,id',
         ]);
-        $q = $request->q ?: null;
-        $f_users = $request->has('u') ? $request->u : [];
-        $f_categories = $request->has('c') ? $request->c : [];
-        $f_values = $request->has('v') ? $request->v : [];
-        $f_inStock = $request->has('in_stock') ? $request->in_stock : null;
-        $f_hasDiscount = $request->has('has_discount') ? $request->has_discount : null;
-        $f_hasCredit = $request->has('has_credit') ? $request->has_credit : null;
 
-        $courses = Course::when($q, function ($query, $q) {
+        $q = $request->q ?: null;
+        $f_category = $request->category ?: null;
+
+        $objs = Course::when($q, function ($query, $q) {
             return $query->where(function ($query) use ($q) {
+                $query->orWhere('code', 'like', '%' . $q . '%');
+                $query->orWhere('name_tm', 'like', '%' . $q . '%');
+                $query->orWhere('name_en', 'like', '%' . $q . '%');
                 $query->orWhere('full_name_tm', 'like', '%' . $q . '%');
                 $query->orWhere('full_name_en', 'like', '%' . $q . '%');
                 $query->orWhere('slug', 'like', '%' . $q . '%');
             });
         })
-            ->when($f_users, function ($query, $f_users) {
-                $query->whereIn('user_id', $f_users);
+            ->when($f_category, function ($query, $f_category) {
+                $query->where('category_id', $f_category);
             })
-            ->when($f_categories, function ($query, $f_categories) {
-                $query->whereIn('category_id', $f_categories);
-            })
-            ->when($f_values, function ($query, $f_values) {
-                return $query->where(function ($query) use ($f_values) {
-                    foreach ($f_values as $f_value) {
-                        $query->whereHas('values', function ($query) use ($f_value) {
-                            $query->whereIn('id', $f_value);
-                        });
-                    }
-                });
-            })
-            ->when(isset($f_hasDiscount), function ($query) {
-                return $query->where('discount_percent', '>', 0)
-                    ->where('discount_start', '<=', Carbon::now()->toDateTimeString())
-                    ->where('discount_end', '>=', Carbon::now()->toDateTimeString());
-            })
-            ->with('user')
-            ->orderBy('random')
-            ->paginate(24);
+            ->with(['category.parent'])
+            ->paginate(50)
+            ->withQueryString();
 
-        $courses = $courses->appends([
-            'q' => $q,
-            'u' => $f_users,
-            'c' => $f_categories,
-            'v' => $f_values,
-            'has_discount' => $f_hasDiscount,
-            'has_credit' => $f_hasCredit,
-        ]);
-
-        // FILTER
-        $users = User::orderBy('name')
-            ->get();
-        $categories = Category::orderBy('sort_order')
-            ->orderBy('slug')
-            ->get();
-        $brands = Brand::orderBy('slug')
-            ->get();
-        $attributes = Attribute::with('values')
+        $categories = Category::whereNotNull('parent_id')->withCount('courses')
             ->orderBy('sort_order')
             ->get();
 
-        return view('course.index')
+        return view('client.course.index')
             ->with([
-                'q' => $q,
-                'f_users' => collect($f_users),
-                'f_categories' => collect($f_categories),
-                'f_values' => collect($f_values)->collapse(),
-                'f_hasDiscount' => $f_hasDiscount,
-                'f_hasCredit' => $f_hasCredit,
-                'courses' => $courses,
-                'users' => $users,
+                'objs' => $objs,
                 'categories' => $categories,
-                'attributes' => $attributes,
+                'f_category' => $f_category,
             ]);
     }
 
@@ -108,7 +61,7 @@ class CourseController extends Controller
     public function show($slug)
     {
         $course = Course::where('slug', $slug)
-            ->with('user', 'category', 'values.attribute')
+            ->with('category', 'values.attribute')
             ->firstOrFail();
 
         if (Cookie::has('p_v')) {
@@ -141,16 +94,15 @@ class CourseController extends Controller
 
     public function create()
     {
-        $categories = Category::orderBy('sort_order')
-            ->orderBy('slug')
-            ->get();
-        $brands = Brand::orderBy('slug')
-            ->get();
-        $attributes = Attribute::with('values')
+        $categories = Category::whereNotNull('parent_id')
             ->orderBy('sort_order')
             ->get();
 
-        return view('course.create')
+        $attributes = Attribute::orderBy('sort_order')
+            ->with('values')
+            ->get();
+
+        return view('client.course.create')
             ->with([
                 'categories' => $categories,
                 'attributes' => $attributes,
@@ -162,38 +114,61 @@ class CourseController extends Controller
     {
         $request->validate([
             'category' => 'required|integer|min:1',
-            'brand' => 'required|integer|min:1',
-            'values' => 'nullable|array',
-            'values.*' => 'nullable|integer|min:0',
+            'level' => 'nullable|integer|min:1',
             'name_tm' => 'required|string|max:255',
             'name_en' => 'nullable|string|max:255',
-            'barcode' => 'nullable|string|max:255',
-            'description' => 'nullable|string|max:1000',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpg,jpeg|max:128|dimensions:width=1000,height=1000',
+            'discount_percent' => 'nullable|integer|min:0',
+            'discount_start' => 'nullable|date|after_or_equal:today',
+            'discount_end' => 'nullable|date|after:discount_start',
+            'videos' => 'nullable|array|min:0',
+            'videos.*' => 'nullable|video|mimes:mp4|max:128',
         ]);
+        $category = Category::findOrFail($request->brand);
+        $level = $request->has('level') ? AttributeValue::findOrFail($request->level) : null;
+        $fullNameTm = $request->name_tm . ' ';
+        $fullNameEn = ($request->name_en ?: $request->name_tm) . ' ';
 
-        $category = Category::findOrFail($request->category);
-        $brand = Brand::findOrFail($request->brand);
 
-        $obj = Product::create([
-            'user_id' => auth()->id(),
+        $obj = Course::create([
             'category_id' => $category->id,
+            'level_id' => $level->id ?: null,
+            'code' => 'c' . $category->id
+                . (isset($level) ? '-g' . $level->id : ''),
             'name_tm' => $request->name_tm,
             'name_en' => $request->name_en ?: null,
-            'full_name_tm' =>  $nameTm . ' ' . (isset($level) ? $level->name_tm . ' ' : '') . $category->course_name_tm,
-            'full_name_en' =>   ($nameEn ?: $nameTm) . ' ' . (isset($level) ? ($level->name_en ?: $level->name_tm) . ' ' : '') . ($category->course_name_en ?: $category->course_name_tm),
+            'full_name_tm' => isset($fullNameTm) ? $fullNameTm : null,
+            'full_name_en' => isset($fullNameEn) ? $fullNameEn : null,
+            'slug' => str()->slug($fullNameTm) . '-' . str()->random(10),
+            'price' => $request->price,
+            'discount_percent' => $request->discount_percent ?: 0,
+            'discount_start' => $request->discount_start ?: Carbon::today(),
+            'discount_end' => $request->discount_end ?: Carbon::today(),
             'description' => $request->description ?: null,
-            'price' => round($request->price, 1),
         ]);
-        $obj->save();
-        $obj->values()->sync($request->has('values') ? array_filter($request->values) : []);
 
+        if ($request->has('videos')) {
+            $firstVideoName = "";
+            $i = 0;
+            foreach ($request->videos as $video) {
+                $name = str()->random(10) . '.' . $video->extension();
+                if ($i == 0) {
+                    $firstVideoName = $name;
+                }
+                Storage::putFileAs('public/p', $video, $name);
+                CourseVideo::create([
+                    'course_id' => $obj->id,
+                    'video' => $name,
+                ]);
+                $i += 1;
+            }
+            $obj->video = $firstVideoName;
+            $obj->update();
+        }
 
-        return redirect()->back()
+        return to_route('client.courses.index')
             ->with([
-                'success' => 'Course (' . $obj->getFullName() . ') created!'
+                'success' => @trans('app.course') . $obj->getName() . @trans('app.added') . '!'
             ]);
     }
 
@@ -201,76 +176,108 @@ class CourseController extends Controller
     public function edit($id)
     {
         $obj = Course::findOrFail($id);
-        if (!$obj->isOwner()) {
-            return abort(403);
-        }
 
-        $categories = Category::orderBy('sort_order')
-            ->orderBy('slug')
-            ->get();;
-        $attributes = Attribute::with('values')
+        $categories = Category::whereNotNull('parent_id')
             ->orderBy('sort_order')
             ->get();
 
-        return view('course.edit')
+        $attributes = Attribute::orderBy('sort_order')
+            ->with('values')
+            ->get();
+
+        $videos = CourseVideo::where('course_id', $id)
+            ->get();
+
+        return view('client.course.edit')
             ->with([
                 'obj' => $obj,
                 'categories' => $categories,
                 'attributes' => $attributes,
+                'videos' => $videos,
             ]);
     }
 
 
     public function update(Request $request, $id)
     {
-        $obj = Course::findOrFail($id);
-        if (!$obj->isOwner()) {
-            return abort(403);
-        }
-
         $request->validate([
             'category' => 'required|integer|min:1',
-            'brand' => 'required|integer|min:1',
-            'values' => 'nullable|array',
-            'values.*' => 'nullable|integer|min:0',
+            'gender' => 'nullable|integer|min:1',
+            'color' => 'nullable|integer|min:1',
+            'size' => 'nullable|integer|min:1',
             'name_tm' => 'required|string|max:255',
             'name_en' => 'nullable|string|max:255',
-            'barcode' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
+            'discount_percent' => 'nullable|integer|min:0',
+            'discount_start' => 'nullable|date|after_or_equal:today',
+            'discount_end' => 'nullable|date|after:discount_start',
+            'videos' => 'nullable|array|min:0',
+            'videos.*' => 'nullable|video|mimes:mp4|max:260',
         ]);
+        $category = Category::findOrFail($request->brand);
+        $level = $request->has('level') ? AttributeValue::findOrFail($request->level) : null;
+        $fullNameTm = $request->name_tm . ' ';
+        $fullNameEn = ($request->name_en ?: $request->name_tm) . ' ';
 
-        $category = Category::findOrFail($request->category);
-
+        $obj = Course::findOrFail($id);
         $obj->category_id = $category->id;
+        $obj->level_id = $level->id ?: null;
+        $obj->code = 'c' . $category->id
+            . (isset($level) ? '-g' . $level->id : '');
         $obj->name_tm = $request->name_tm;
         $obj->name_en = $request->name_en ?: null;
-        $obj->full_name_tm = $brand->name . ' ' . $category->product_tm . ' ' . $request->name_tm;
-        $obj->full_name_en = $brand->name . ' ' . ($category->product_en ?: $category->product_tm) . ' ' . ($request->name_en ?: $request->name_tm);
-        $obj->description = $request->description ?: null;
-        $obj->price = round($request->price, 1);
-        $obj->update();
-        $obj->values()->sync($request->has('values') ? array_filter($request->values) : []);
+        $obj->full_name_tm = isset($fullNameTm) ? $fullNameTm : null;
+        $obj->full_name_en = isset($fullNameEn) ? $fullNameEn : null;
+        $obj->slug = str()->slug($fullNameTm) . '-' . str()->random(10);
+        $obj->price = $request->price;
+        $obj->discount_percent = $request->discount_percent ?: 0;
+        $obj->discount_start = $request->discount_start ?: Carbon::today();
+        $obj->discount_end = $request->discount_end ?: Carbon::today();
 
+        if ($request->has('images')) {
+            $firstVideoName = "";
+            $i = 0;
+            foreach ($request->videos as $video) {
+                $name = str()->random(10) . '.' . $video->extension();
+                if ($i == 0) {
+                    $firstVideoName = $name;
+                }
+                Storage::putFileAs('public/p', $video, $name);
+                CourseVideo::create([
+                    'course_id' => $obj->id,
+                    'video' => $name,
+                ]);
+                $i += 1;
+            }
+            $obj->video = $firstVideoName;
+            $obj->update();
+        }
 
-        return redirect()->back()
+        return to_route('client.courses.index')
             ->with([
-                'success' => 'Course (' . $obj->getFullName() . ') updated!'
+                'success' => @trans('app.course') . $obj->getName() . @trans('app.updated') . '!'
             ]);
     }
 
 
-    public function delete($id)
+    public function destroy($id)
     {
-        $obj = Course::findOrFail($id);
-        if (!$obj->isOwner()) {
-            return abort(403);
+        $videos = CourseVideo::where('course_id', $id)
+            ->get();
+        if (count($videos) > 0){
+            foreach ($videos as $video)
+            {
+                Storage::delete('public/p/' . $video);
+            }
         }
-        $objName = $obj->getFullName();
+
+        $obj = Course::findOrFail($id);
+        $objName = $obj->getName();
         $obj->delete();
 
-        return redirect()->route('home')
+        return redirect()->back()
             ->with([
-                'success' => 'Course (' . $objName . ') deleted!'
+                'success' => trans('app.category') . ' (' . $objName . ') ' . trans('app.deleted') . '!'
             ]);
     }
 }

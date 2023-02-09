@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Client\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Client\LoginController;
+use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\VerificationController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Honeypot\ProtectAgainstSpam;
@@ -37,14 +38,14 @@ Route::controller(VerificationController::class)
         Route::post('/verification', 'store');
     });
 
-Route::controller(LoginController::class)
+Route::controller(RegisterController::class)
     ->middleware('guest:customer_web')
     ->group(function () {
-        Route::get('/login', 'create')->name('client.login');
-        Route::post('/login', 'store')->middleware(ProtectAgainstSpam::class);
+        Route::get('/register', 'create')->name('client.register');
+        Route::post('/register', 'store')->middleware(ProtectAgainstSpam::class);
     });
 
-Route::controller(LoginController::class)
+Route::controller(RegisterController::class)
     ->middleware('auth:customer_web')
     ->group(function () {
         Route::post('/logout', 'destroy')->name('client.logout');

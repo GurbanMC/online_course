@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
 </head>
-<body class="bg-light">
+<body class="bg-gradient">
 @include('client.app.nav')
+@include('client.app.category')
 @include('client.app.alert')
 @yield('content')
 <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

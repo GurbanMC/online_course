@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
-class LoginController extends Controller
+class RegisterController extends Controller
 {
     public function create(): View
     {
@@ -30,7 +30,7 @@ class LoginController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:'.Customer::class],
-            'password' => ['required', Rules\Password::defaults()],
+            'password' => ['required', 'string', 'min:8',Rules\Password::defaults()],
         ]);
 
         $customer = Customer::create([
@@ -43,7 +43,7 @@ class LoginController extends Controller
 
         Auth::login($customer);
 
-        return to_route('admin.dashboard');
+        return to_route('home');
     }
 
 
@@ -55,6 +55,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return to_route('client.login');
+        return to_route('client.register');
     }
 }
