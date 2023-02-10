@@ -11,6 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
+        return
         $objs = Category::orderBy('sort_order')
             ->with('parent')
             ->withCount([

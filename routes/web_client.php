@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Client\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Client\CourseController;
@@ -21,6 +23,8 @@ Route::controller(CourseController::class)
         Route::get('/category/{slug}', 'category')->name('category')->where('slug', '[A-Za-z0-9-]+');
     });
 
+
+
 Route::controller(CartController::class)
     ->prefix('/cart')
     ->name('cart.')
@@ -38,21 +42,33 @@ Route::controller(VerificationController::class)
         Route::post('/verification', 'store');
     });
 
-Route::controller(RegisterController::class)
-    ->middleware('guest:customer_web')
+Route::controller(RegisteredUserController::class)
+    ->middleware('guest')
     ->group(function () {
         Route::get('/register', 'create')->name('client.register');
         Route::post('/register', 'store')->middleware(ProtectAgainstSpam::class);
     });
 
-Route::controller(RegisterController::class)
-    ->middleware('auth:customer_web')
+Route::controller(AuthenticatedSessionController::class)
+    ->middleware('guest')
     ->group(function () {
-        Route::post('/logout', 'destroy')->name('client.logout');
+        Route::get('/login', 'create')->name('client.login');
+        Route::post('/login', 'store')->middleware(ProtectAgainstSpam::class);
     });
+
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')->name('logout');
+
 Route::middleware('auth')
     ->prefix('/client')
     ->name('client.')
     ->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+
+        Route::resource('verifications', VerificationController::class)->only(['index'])->middleware('can:verifications');
         Route::resource('courses', CourseController::class)->middleware('can:courses');
+        Route::resource('categories', CategoryController::class)->except(['show'])->middleware('can:categories');
+        Route::resource('attributes', AttributeController::class)->except(['show'])->middleware('can:attributes');
+        Route::resource('attributeValues', AttributeValueController::class)->except(['index', 'show'])->middleware('can:attributes');
+        Route::resource('users', UserController::class)->except(['show'])->middleware('can:users');
     });

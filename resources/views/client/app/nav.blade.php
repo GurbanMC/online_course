@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <form action="{{ route('client.courses.index') }}" class="row align-items-center g-2" role="search" id="productFilter">
+        <form action="{{ route('client.home') }}" class="row align-items-center g-2" role="search" id="productFilter">
             <div class="input-group ms-5">
                 <input type="search" class="form-control form-control-md w-75 rounded-0" name="q" placeholder="{{ @trans('app.search') }}" aria-label="Search" aria-describedby="search-addon" />
                 <button type="submit" class="btn btn-danger rounded-0"><i class="bi-search"></i></button>
@@ -27,7 +27,7 @@
                 @else
                     <li class="nav-item">
                         <div class="btn btn-light w-100 p-0 rounded-0" style="border-color: #1a1e21">
-                            <a class="nav-link fw-semibold text-dark" href="{{ route('client.register') }}">
+                            <a class="nav-link fw-semibold text-dark" href="{{ route('client.login') }}">
                                 @lang('app.login')
                             </a>
                         </div>

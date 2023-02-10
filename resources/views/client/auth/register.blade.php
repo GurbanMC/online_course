@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>@lang('app.login') - @lang('app.app-name')</title>
+    <title>@lang('app.register') - @lang('app.app-name')</title>
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-icons.css') }}">
@@ -19,7 +19,7 @@
                      class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form action="{{ route('client.login') }}" method="post">
+                <form action="{{ route('client.register') }}" method="post">
 
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start my-3">
                         <p class="lead fw-normal mb-0 me-3">Sign in with</p>
@@ -33,6 +33,18 @@
                         <button type="button" class="btn btn-primary btn-floating mx-1">
                             <i class="bi-linkedin"></i>
                         </button>
+                    </div>
+
+                    <!-- Name input -->
+                    <div class="form-outline mb-4">
+                        <label for="name">
+                            @lang('app.name')
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" class="form-control" value="{{ old('name') }}" required autofocus>
+                        @error('name')
+                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Username input -->
@@ -69,7 +81,7 @@
 
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-primary btn-lg">@lang('app.login')</button>
+                        <button type="submit" class="btn btn-primary btn-lg">@lang('app.register')</button>
                     </div>
 
                 </form>
