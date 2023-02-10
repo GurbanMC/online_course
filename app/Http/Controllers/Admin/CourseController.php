@@ -106,7 +106,6 @@ class CourseController extends Controller
             'discount_end' => $request->discount_end ?: Carbon::today(),
             'description' => $request->description ?: null,
         ]);
-        return 1;
         if ($request->has('videos')) {
             $firstVideoName = "";
             $i = 0;
