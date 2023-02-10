@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gradient">
 @include('client.app.nav')
-@include('client.app.category')
+@include('client.app.index')
 @include('client.app.alert')
 @yield('content')
 <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

@@ -14,7 +14,12 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::orderBy('sort_order')
-            ->with('parent', 'courses')
+            ->with('parent')
+            ->withCount([
+                'courses as courses_count' => function ($query) {
+                    $query->where('category_id', '>', 0);
+                }
+            ])
             ->get();
 
         return view('client.home.index')

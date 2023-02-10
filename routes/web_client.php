@@ -65,10 +65,4 @@ Route::middleware('auth')
     ->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
-        Route::resource('verifications', VerificationController::class)->only(['index'])->middleware('can:verifications');
-        Route::resource('courses', CourseController::class)->middleware('can:courses');
-        Route::resource('categories', CategoryController::class)->except(['show'])->middleware('can:categories');
-        Route::resource('attributes', AttributeController::class)->except(['show'])->middleware('can:attributes');
-        Route::resource('attributeValues', AttributeValueController::class)->except(['index', 'show'])->middleware('can:attributes');
-        Route::resource('users', UserController::class)->except(['show'])->middleware('can:users');
     });

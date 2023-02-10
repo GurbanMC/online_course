@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <form action="{{ route('client.register') }}" method="post">
-
+                    @csrf
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start my-3">
                         <p class="lead fw-normal mb-0 me-3">Sign in with</p>
                         <button type="button" class="btn btn-primary btn-floating mx-1">

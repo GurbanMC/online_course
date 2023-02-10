@@ -84,7 +84,7 @@ class CourseController extends Controller
             'videos' => 'nullable|array|min:0',
             'videos.*' => 'nullable|video|mimes:mp4|max:128',
         ]);
-        $category = Category::findOrFail($request->brand);
+        $category = Category::findOrFail($request->category);
         $level = $request->has('level') ? AttributeValue::findOrFail($request->level) : null;
         $fullNameTm = $request->name_tm . ' ';
         $fullNameEn = ($request->name_en ?: $request->name_tm) . ' ';
@@ -99,14 +99,14 @@ class CourseController extends Controller
             'name_en' => $request->name_en ?: null,
             'full_name_tm' => isset($fullNameTm) ? $fullNameTm : null,
             'full_name_en' => isset($fullNameEn) ? $fullNameEn : null,
-            'slug' => str()->slug($fullNameTm) . '-' . str()->random(10),
+            'slug' => str()->slug($fullNameTm) . '-' . str()->random(100),
             'price' => $request->price,
             'discount_percent' => $request->discount_percent ?: 0,
             'discount_start' => $request->discount_start ?: Carbon::today(),
             'discount_end' => $request->discount_end ?: Carbon::today(),
             'description' => $request->description ?: null,
         ]);
-
+        return 1;
         if ($request->has('videos')) {
             $firstVideoName = "";
             $i = 0;
