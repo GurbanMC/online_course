@@ -19,6 +19,11 @@ Route::controller(HomeController::class)
 
 Route::controller(CourseController::class)
     ->group(function () {
+        Route::get('course/index', 'index')->name('index');
+        Route::get('course/create/{id}', 'create')->name('course.create')->where('id', '[0-9]+');
+        Route::get('course/destroy/{id}', 'destroy')->name('course.destroy')->where('id', '[0-9]+');
+        Route::get('course/update/{id}', 'update')->name('course.update')->where('id', '[0-9]+');
+        Route::get('course/show/{slug}', 'show')->name('course.show')->where('slug', '[A-Za-z0-9-]+');
         Route::get('/course/{slug}', 'course')->name('course')->where('slug', '[A-Za-z0-9-]+');
         Route::get('/category/{slug}', 'category')->name('category')->where('slug', '[A-Za-z0-9-]+');
     });

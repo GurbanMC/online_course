@@ -10,6 +10,7 @@
 </head>
 <body class="bg-gradient">
 @include('client.app.nav')
+@include('client.app.slider')
 @include('client.app.index')
 @include('client.app.alert')
 @yield('content')
